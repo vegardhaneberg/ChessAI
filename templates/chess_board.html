@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chess AI</title>
+    <style>
+        .grid-container {
+          display: grid;
+          grid-template-columns: 600px 600px;
+          padding: 10px;
+        }
+        .grid-item {
+          background-color: transparent;
+          padding: 20px;
+          font-size: 30px;
+          text-align: center;
+        }
+        #header {
+            text-align: center;
+            color: lightgray;
+            font-size: 4.7em;
+        }
+        .body-text {
+            color: lightgray;
+        }
+    </style>
+</head>
+<body style="background-color: rgb(60, 60, 60); ">
+    <div>
+        <h1 id="header"
+            style="font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif">
+            Play A Chess Engine
+        </h1>
+        <div class="grid-container">
+            <div class="grid-item">
+                {{ svg|safe }}
+            </div>
+            <div class="grid-item">
+                <form method="post" action="/submit" enctype="multipart/form-data">
+                    <label class="body-text" for="move">Write Your Move</label>
+                    <input autofocus required type="text" id="move" name="move"
+                           style="background-color: rgb(107, 107, 107); ">
+                    <input type="submit" name="submit" value="Move" style="border-radius: 100px;
+                           background-color: deepskyblue;
+                           color: black;
+                           border-color: deepskyblue;"/>
+                </form>
+                {% block content %}
+                    {% if invalid_move %}
+                    <p class="body-text">Invalid Move! Check if you have typed a wrong square, if your king is in check or if the piece is pinned</p>
+                    {% endif %}
+
+                    {% if game_over %}
+                        <p class="body-text">Game over. Go to http://127.0.0.1:5000/new_game for a new game</p>
+                        <form method="get" action="/">
+                            <input type="submit" value="New Game" />
+                        </form>
+                    {% endif %}
+
+                    {% if eval %}
+                        <p class="body-text">Evaluation: {{ eval }}</p>
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
