@@ -1,1 +1,6 @@
 /venv
+/.vscode
+/Test.py
+.DS_Store
+.idea
+Games
