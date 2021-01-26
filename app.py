@@ -1,9 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import chess
 import chess.svg
 from engine import MiniMax
 import math
-from flask import jsonify
 
 
 app = Flask(__name__)
