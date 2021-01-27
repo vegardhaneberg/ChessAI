@@ -6,54 +6,97 @@
     <script src="static/js/chess.js"></script>
 
     <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            padding: 0%;
+            margin: 0%;
+        }
         .grid-container {
-          display: grid;
-          grid-template-columns: 600px 600px;
-          padding: 10px;
+            height: 100%;
+            width: 100%;
+            display: grid;
+            grid-template-columns: auto auto;
+            padding: 1%;
+            align-content: center;
         }
         .grid-item {
-          background-color: transparent;
-          padding: 20px;
-          font-size: 30px;
-          text-align: center;
+            padding: 0px;
+            margin: 0%;
+            font-size: 30px;
+            text-align: center;
+            align-content: center;
         }
         #header {
             text-align: center;
             color: lightgray;
             font-size: 4.5em;
         }
-        .loader {
-            border: 16px solid #f3f3f3; /* Light grey */
-            border-top: 16px solid black; /* Blue */
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            animation: spin 2s linear infinite;
+        #chessboard{
+            width: 80%;
+            height: 80%;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .box-view {
+            align-self: center;
+            align-content: center;
+            border: 15px black;
+        }
+        .lds-ring {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+            }
+        .lds-ring div {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            margin: 8px;
+            border: 8px solid #fff;
+            border-radius: 50%;
+            animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            border-color: #fff transparent transparent transparent;
+        }
+        .lds-ring div:nth-child(1) {
+            animation-delay: -0.45s;
+        }
+        .lds-ring div:nth-child(2) {
+            animation-delay: -0.3s;
+            }
+        .lds-ring div:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+        @keyframes lds-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
 
 <body style="background-color: rgb(60, 60, 60); ">
-    <h1 id="header" style="font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif">Play A Chess Engine</h1>
+    <h2 id="header" style="font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+                        margin: 0px 0px 5px 0px;
+                        padding: 0px;">
+    Play A Chess Engine
+    </h2>
+
 
     <div class="grid-container">
         <div class="grid-item">
-            <div id="chessboard" style="width: 500px"></div>
+            <div id="chessboard"></div>
+            <div class="box-view">
+                <img id="backBtn" src="static/img/left.png" width="50px" height="50px">
+                <img id="forwardBtn" src="static/img/right.png" width="50px" height="50px">
+            </div>
         </div>
         <div class="grid-item">
-
-        </div>
-        <div class="grid-item">
-            <img id="backBtn" src="static/img/left.png" width="50px" height="50px">
-            <img id="forwardBtn" src="static/img/right.png" width="50px" height="50px">
-        </div>
-        <div class="grid-item">
-            <label id="game-over-label"></label>
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
         </div>
     </div>
     <script src="static/js/scripts.js"></script>
