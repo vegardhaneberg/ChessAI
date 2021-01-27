@@ -3,6 +3,7 @@ A Python Flask web application where you can play chess against a bot. The bot u
 The bot is available on the /game url.
 
 To play the bot do the following:
+	
 	1. clone the repo
 	
 	2. run "flask run" form the root directory
