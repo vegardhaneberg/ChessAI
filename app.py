@@ -3,6 +3,8 @@ import chess
 import chess.svg
 from engine import MiniMax
 import math
+import time
+import json
 
 
 app = Flask(__name__)
@@ -88,6 +90,22 @@ def submit():
 @app.route('/test', methods=['GET', 'POST'])
 def test():
     return render_template('test.html')
+
+
+@app.route('/make_move', methods=['GET', 'POST'])
+def make_move():
+    fen = request.get_data().decode(encoding="utf-8", errors="strict").replace('%2F', '/').replace('+', ' ')[6:]
+
+    board = chess.Board(fen)
+    evaluation, move = MiniMax.minmax(board, 4, -math.inf, math.inf)
+    evaluation = evaluation/100
+
+    return move.uci()
+
+
+@app.route('/game', methods=['GET'])
+def game():
+    return render_template('game.html')
 
 
 if __name__ == '__main__':
