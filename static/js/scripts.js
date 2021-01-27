@@ -33,42 +33,56 @@ function onDrop(source, target) {
     }
 }
 
-function onSnapEnd () {
+async function onSnapEnd () {
     chessboard.position(chessgame.fen());
 
-    let url = "https://9bd5c46620a4.ngrok.io/make_move";
     loading = true;
-
-    $.post(url, {
-
+    document.getElementById("loader-image").style.opacity = "1";
+    await $.ajax({
+        type: "POST",
+        url: "/make_move",
+        data: {param: chessgame.fen()}
+    }).done(function (response) {
+        chessgame.move(response, { sloppy: true })
+        chessboard.position(chessgame.fen());
     });
-
-    //fetch(url).then(response => response.json()).then(data => console.log(data));
+    document.getElementById("loader-image").style.opacity = "0";
 
     loading = false;
 }
 
 $('#backBtn').on('click', function () {
     if (!chessgame.game_over() && !loading){
-        let move = chessgame.undo();
-        if (move !== null){
+        let blackMove = chessgame.undo();
+        let whiteMove = chessgame.undo();
+        if (whiteMove !== null){
             chessboard.position(chessgame.fen());
-            undoMoves.push(move);
+            undoMoves.push(blackMove);
+            undoMoves.push(whiteMove);
         }
     }
 });
 
 $('#forwardBtn').on('click', function () {
-    if (undoMoves.length > 0 && !loading){
-        let move = undoMoves.pop();
-        chessgame.move(move);
+    if (undoMoves.length > 1 && !loading){
+        let whiteMove = undoMoves.pop();
+        let blackMove = undoMoves.pop();
+        chessgame.move(whiteMove);
+        chessboard.position(chessgame.fen())
+        chessgame.move(blackMove);
         chessboard.position(chessgame.fen())
     }
+});
+
+$('#resign-button').on('click', function () {
+    chessgame = new Chess();
+    chessboard.position(chessgame.fen())
 });
 
 function sleep (ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 
 
 
