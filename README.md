@@ -12,6 +12,7 @@ To play the bot do the following:
 
 Can you beat the bot??
 
+If you don't see the loading animation after your move, try clearing your browser cache. 
 
 
 The chessboard is powered by chessboard.js and chess.js.
