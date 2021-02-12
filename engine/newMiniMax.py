@@ -1,6 +1,7 @@
 import chess
 import math
-import engine.PieceValueBoards as PieceValueBoards
+from engine import PieceValueBoards as PieceValueBoards
+
 
 def evaluation_function(board):
 
@@ -64,44 +65,82 @@ def evaluation_function(board):
 def minmax(board, depth, alpha, betha):
 
     if depth == 0 or board.is_game_over():
-        return evaluation_function(board), None
+        return evaluation_function(board)
 
     legal_moves = board.legal_moves
 
     if board.turn:
-        best_move = None
         best_eval = -math.inf
 
         for current_move in legal_moves:
             board_copy = board.copy()
             board_copy.push(current_move)
-            current_eval, move = minmax(board_copy, depth - 1, alpha, betha)
+            current_eval = minmax(board_copy, depth - 1, alpha, betha)
 
             if current_eval > best_eval:
-                best_move = current_move
                 best_eval = current_eval
             alpha = max(alpha, current_eval)
             if alpha >= betha:
                 break
-        return best_eval, best_move
+        return best_eval
 
     else:
-        best_move = None
         best_eval = math.inf
 
         for current_move in legal_moves:
             board_copy = board.copy()
             board_copy.push(current_move)
-            current_eval, move = minmax(board_copy, depth - 1, alpha, betha)
+            current_eval = minmax(board_copy, depth - 1, alpha, betha)
 
             if current_eval < best_eval:
                 best_eval = current_eval
-                best_move = current_move
 
             betha = min(betha, current_eval)
             if alpha >= betha:
                 break
-        return best_eval, best_move
+        return best_eval
 
 
+def get_move(board):
 
+    depth = 4
+    legal_moves = board.legal_moves
+    best_move = None
+
+    if board.turn:
+        best_eval = -math.inf
+
+        for current_move in legal_moves:
+            new_board = board.copy()
+            new_board.push(current_move)
+            current_eval = minmax(new_board, depth, -math.inf, math.inf)
+
+            if current_eval >= best_eval:
+                best_eval = current_eval
+                best_move = current_move
+    else:
+        best_eval = math.inf
+
+        for current_move in legal_moves:
+            new_board = board.copy()
+            new_board.push(current_move)
+            current_eval = minmax(new_board, depth, -math.inf, math.inf)
+
+            if current_eval <= best_eval:
+                best_eval = current_eval
+                best_move = current_move
+    
+    return best_move
+
+"""
+def main():
+    fen = '1rkr4/p6p/7Q/3p1p2/PP1Pp2p/1K6/4B3/8 w - - 0 1'
+    board = chess.Board(fen)
+
+    move = get_move(board)
+    print(move)
+
+
+if __name__ == '__main__':
+    main()
+"""

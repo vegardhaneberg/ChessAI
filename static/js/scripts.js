@@ -5,11 +5,15 @@ let config = {
     onDragStart: onDragStart,
     onDrop: onDrop,
     onSnapEnd: onSnapEnd,
+    onMouseoverSquare: onMouseoverSquare,
+    onMouseoutSquare: onMouseoutSquare,
 };
 let chessboard = ChessBoard("chessboard", config);
 let chessgame = new Chess();
 let undoMoves = [];
 let loading = false;
+var whiteSquareGrey = '#a9a9a9'
+var blackSquareGrey = '#696969'
 
 function onDragStart(source, piece, position, orientation) {
     if (chessgame.game_over() || loading) return false
@@ -78,6 +82,42 @@ $('#resign-button').on('click', function () {
     chessgame = new Chess();
     chessboard.position(chessgame.fen())
 });
+
+function onMouseoverSquare(square, piece){
+    let moves = chessgame.moves({
+        square: square,
+        verbose: true
+    });
+
+    if (moves.length === 0) return
+
+    highlightSquare(square)
+
+    for (var i = 0; i < moves.length; i++){
+        highlightSquare(moves[i].to)
+    }
+
+}
+
+function onMouseoutSquare (square, piece) {
+    removeGreySquares()
+}
+
+function removeGreySquares () {
+    $('#chessboard .square-55d63').css('background', '')
+}
+
+function highlightSquare (square) {
+    var $square = $('#chessboard .square-' + square)
+  
+    var background = whiteSquareGrey
+    if ($square.hasClass('black-3c85d')) {
+      background = blackSquareGrey
+    }
+  
+    $square.css('background', background)
+}
+
 
 function sleep (ms){
     return new Promise(resolve => setTimeout(resolve, ms));
