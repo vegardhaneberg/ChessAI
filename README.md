@@ -8,7 +8,7 @@ To play the bot do the following:
 	
 	2. run "flask run" form the root directory
 	
-	3. use the /game url
+	3. use the /js_game url
 
 Can you beat the bot??
 
