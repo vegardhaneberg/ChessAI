@@ -16,3 +16,7 @@ If you don't see the loading animation after your move, try clearing your browse
 
 
 The chessboard is powered by chessboard.js and chess.js.
+
+
+Known bugs:
+	- Hover over black's pieces while bot is thinking
