@@ -6,7 +6,7 @@ To play the bot do the following:
 	
 	1. clone the repo
 	
-	2. run ´´´flask run from the root directory
+	2. run ´´´flask run´´´ from the root directory
 	
 	3. use the /js_game url
 
