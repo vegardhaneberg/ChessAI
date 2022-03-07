@@ -1,5 +1,5 @@
 # ChessAI
-A Python Flask web application where you can play chess against a custom made bot. The bot uses iterative deepening with minimax, move ordering and alpha beta pruning. 
+A Python Flask web application where you can play chess against a bot. The bot uses iterative deepening with minimax, move ordering, alpha beta pruning and a custom made heuristic function. 
 The bot is available on the /game url.
 
 To play the bot do the following:
